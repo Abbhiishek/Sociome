@@ -1,14 +1,15 @@
-# Welcome 🙏 
+# Welcome 👋
 
 CFCApi is a API DEVELOPMENT PROJECT UNDER CODE FOR COMMUNITY !
 
-# Project Walkthrough
+
+# Project Walkthrough 🚀
 
 - CFCApi run on Python using FASTapi Framework [Docs](https://fastapi.tiangolo.com/)
 - The project is under the Guidance of [Abhishek Kushwaha](https://twitter.com/abbhishek_k)
 
 
-# Installation
+# Installation ☘️
 
 - To install The Fastapi on the system
 
@@ -19,13 +20,14 @@ CFCApi is a API DEVELOPMENT PROJECT UNDER CODE FOR COMMUNITY !
 - Run the server in LocalHost:
   
       uvicorn main:app --reload
-- Open your browser at 
+- Open your browser at !
+
 
       http://127.0.0.1:8000/
 - Interactive API doc
 
       http://127.0.0.1:8000/docs 
-##Sample code 
+# Sample code 🛠
 
 ```python
 import datetime
@@ -55,10 +57,10 @@ def read_item(author_id: int, q: Optional[str] = None):
 
 -This project needs a ⭐️ from you. Don't forget to leave a star ⭐️
 
--Follow me [here](https://twitter.com/abbhishek_k)
+-Follow me [here](https://twitter.com/abbhishek_k) ✨
 
--Contributions to the project are most welcome!
+-Contributions to the project are most welcome! 😊
 
--Feel free to fork this repo and contribute.
+-Feel free to fork this repo and contribute. 🔧
 
--Thank You!
+-Thank You!👍
