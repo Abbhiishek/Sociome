@@ -13,25 +13,18 @@ CFCApi is a API DEVELOPMENT PROJECT UNDER CODE FOR COMMUNITY !
 - To install The Fastapi on the system
 
       pip install fastapi
-
 - To install all the dependiencies at once use :
 
       pip install fastapi[all]
-
 - Run the server in LocalHost:
-
-   
+  
       uvicorn main:app --reload
-
-
 - Open your browser at 
 
       http://127.0.0.1:8000/
-
 - Interactive API doc
 
       http://127.0.0.1:8000/docs 
-
 ##Sample code 
 
 ```python
