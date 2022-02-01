@@ -40,3 +40,9 @@ def read_item():
     time = datetime.today()
     isoTime= time.isoformat()
     return {"Today Date": isoTime}
+
+@app.get("/posts")
+def get_posts():
+    return{"Posts":{1:{"Name":"SOCIOME Posts 01"},
+                    2:{"Name":"Amandeep"},
+                    }}
