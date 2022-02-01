@@ -1,12 +1,20 @@
 import datetime
+from random import random
 from fastapi.params import Body
 from typing import Optional
 import time
 from datetime import date, time,datetime
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
+class Post(BaseModel):
+    # post_id:int = random[0,1000000000] #will generate a random number as post_id (only for testing)
+    content: str #the main content of the post 
+    published: bool =True #the post will be published or not default is set to true 
+    reacts: int = 0 # its the likes that the post have 
+    created_at: str = datetime.now() # its the time at which the post was created 
 
 @app.get("/")
 def read_root():
@@ -48,5 +56,7 @@ def get_posts():
                     2:{"Name":"Amandeep"},
                     }}
 @app.post("/create_posts") #it create a single post 
-def create_posts(content:dict= Body(...)): # we are passing the information that we need to pass from body as dictionary and store it in content 
+def create_posts(content:Post): # we are passing the information that we need to pass from body as dictionary and store it in content 
     return{"Status":"Posts Created !" , "Posts":content} # reteriving the body content , but its not being stored now !!!
+
+    # we want user to send content , published only other data would be default :
