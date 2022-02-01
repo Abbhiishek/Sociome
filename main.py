@@ -1,4 +1,5 @@
 import datetime
+from fastapi.params import Body
 from typing import Optional
 import time
 from datetime import date, time,datetime
@@ -41,8 +42,11 @@ def read_item():
     isoTime= time.isoformat()
     return {"Today Date": isoTime}
 
-@app.get("/posts")
+@app.get("/posts") #it get all the posts
 def get_posts():
     return{"Posts":{1:{"Name":"SOCIOME Posts 01"},
                     2:{"Name":"Amandeep"},
                     }}
+@app.post("/create_posts") #it create a single post 
+def create_posts(content:dict= Body(...)): # we are passing the information that we need to pass from body as dictionary and store it in content 
+    return{"Status":"Posts Created !" , "Posts":content} # reteriving the body content , but its not being stored now !!!
