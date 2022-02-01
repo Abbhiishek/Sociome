@@ -29,6 +29,12 @@ def read_item():
 def read_item(author_id: int, msg: Optional[str] = None, Author_Name:Optional[str]= None):
     return {"Author_Id": author_id,"Author_Name": Author_Name, "Message": msg }
 
+    '''    {
+    "Author_Id": 1,
+    "Author_Name": "abhishek kushwaha",
+    "Message": "hello i am testing the api"
+    }'''
+
 @app.get("/time")
 def read_item():
     time = datetime.today()
