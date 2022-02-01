@@ -1,11 +1,22 @@
 # Welcome 👋
 
-CFCApi is a API DEVELOPMENT PROJECT UNDER [CODE FOR COMMUNITY !](https://github.com/Abbhiishek/Code-For-Community)
+Sociome is a API DEVELOPMENT PROJECT UNDER [CODE FOR COMMUNITY !](https://github.com/Abbhiishek/Code-For-Community) capable of CRUD operation and this api is specific with Social Media Application Functionalities.
 
+# Tech-Stacks Used 🔮
+  <p align="left"> 
+   <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a>
+  <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noreferrer"> <img src="https://fastapi.tiangolo.com/img/icon-white.svg" alt="FastApi" width="40" height="40"/> </a> 
+  <a href="https://www.sqlalchemy.org/" target="_blank" rel="noreferrer"> <img src="https://www.sqlalchemy.org/img/sqla_logo.png" alt="sqlalchemy" width="100" height="40"/> </a>
+  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> 
+  <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> 
+  <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> 
+   <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> 
+   <a href="https://heroku.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/heroku/heroku-icon.svg" alt="heroku" width="40" height="40"/> </a> 
+   </p>
 
 # Project Walkthrough 🚀
 
-- CFCApi run on Python using FASTapi Framework [Docs](https://fastapi.tiangolo.com/)
+- Sociome run on Python using FASTapi Framework [Docs](https://fastapi.tiangolo.com/)
 - The project is under the Guidance of [Abhishek Kushwaha](https://twitter.com/abbhishek_k)
 
 
