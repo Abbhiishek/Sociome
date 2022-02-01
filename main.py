@@ -1,5 +1,5 @@
 import datetime
-from random import random
+from random import random, randrange
 from turtle import title
 from fastapi.params import Body
 from typing import Optional
@@ -12,14 +12,14 @@ app = FastAPI()
 
 #Schema 
 class Post(BaseModel):
-    # post_id:int = random[0,1000000000] #will generate a random number as post_id (only for testing)
+    post_id: Optional[int]   #will generate a random number as post_id (only for testing)
     content: str #the main content of the post 
     published: bool =True #the post will be published or not default is set to true 
     reacts: int = 0 # its the likes that the post have 
     created_at: str = datetime.now() # its the time at which the post was created 
 #fake post dictionary
 
-post={}
+post=[{}]
 
 # root operation 
 @app.get("/")
@@ -61,16 +61,17 @@ def read_item():
 # This path OPERATION is to retrieve all the post from the data base @
 @app.get("/posts") #it get all the posts
 def get_posts():
-    return{"Posts":{1:{"Name":"SOCIOME Posts 01"},
-                    2:{"Name":"Amandeep"},
-                    }}
+
+    return{"Posts":post}
 
 
 #This path operation create a single post 
 @app.post("/create_posts") 
 def create_posts(content:Post): # we are passing the information that we need to pass from body as dictionary and store it in content 
-    post.append(content.dict())
-    return{"Status":"Posts Created !" , "Posts":content} # reteriving the body content , but its not being stored now !!!
+    post_dict=content.dict()
+    post_dict['post_id']=randrange(0,10000000)
+    post.append(post_dict)
+    return{"Status":"Posts Created !" , "Posts":post} # reteriving the body content , but its not being stored now !!!
     
 
     # we want user to send content , published only other data would be default :
