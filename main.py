@@ -25,9 +25,9 @@ def read_item():
     9:{"Name": "Koushik Das", "Github_id": "https://github.com/koushik-das123"},
     }
 
-@app.get("/CustomeMsg/{author_id}/{msg}/{Author_name}")
-def read_item(author_id: int, q: Optional[str] = None, name:Optional[str]= None):
-    return {"Author_Id": author_id,"Author_Name": Author_name, "Message": msg }
+@app.get("/CustomeMsg/{author_id}/{msg}/{Author_Name}")
+def read_item(author_id: int, msg: Optional[str] = None, Author_Name:Optional[str]= None):
+    return {"Author_Id": author_id,"Author_Name": Author_Name, "Message": msg }
 
 @app.get("/time")
 def read_item():
