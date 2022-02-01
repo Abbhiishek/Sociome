@@ -1,5 +1,6 @@
 import datetime
 from random import random
+from turtle import title
 from fastapi.params import Body
 from typing import Optional
 import time
@@ -16,7 +17,9 @@ class Post(BaseModel):
     published: bool =True #the post will be published or not default is set to true 
     reacts: int = 0 # its the likes that the post have 
     created_at: str = datetime.now() # its the time at which the post was created 
+#fake post dictionary
 
+post={}
 
 # root operation 
 @app.get("/")
@@ -66,6 +69,8 @@ def get_posts():
 #This path operation create a single post 
 @app.post("/create_posts") 
 def create_posts(content:Post): # we are passing the information that we need to pass from body as dictionary and store it in content 
+    post.append(content.dict())
     return{"Status":"Posts Created !" , "Posts":content} # reteriving the body content , but its not being stored now !!!
+    
 
     # we want user to send content , published only other data would be default :
