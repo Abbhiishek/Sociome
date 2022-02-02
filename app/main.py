@@ -6,10 +6,11 @@ from fastapi.params import Body
 from typing import Optional
 import time
 from datetime import date, time,datetime
-from fastapi import FastAPI
+from fastapi import FastAPI,status
 from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
+import time
 
 app = FastAPI()
 while True:
@@ -24,6 +25,7 @@ while True:
     except Exception as error:
         print ("Connecting to database failed")
         print("Error: ", error)
+        time.sleep(2)
 
 
 #Schema 
@@ -42,19 +44,7 @@ post=[{}]
 def read_root():
     return {"Title":"SOCIOME- Social Media Api","Creator":"Code For Community", "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
 
-# This path shows all the developers of the *Sociome* with their github accounts 
-@app.get("/developers")
-def read_item():
-    return {1:{"Name": "Abhishek Kushwaha", "Github_id": "https://github.com/Abbhiishek"},
-    2:{"Name": "Amandeep Singh", "Github_id": "https://github.com/Aman8017k"},
-    3:{"Name": "Shivam Basak", "Github_id": "https://github.com/shivamBasak"},
-    4:{"Name": "Anjali Gupta", "Github_id": "https://github.com/anjalig18"},
-    5:{"Name": "Anshita Choubey", "Github_id": "https://github.com/Anshitachoubey07"},
-    6:{"Name": "Muskaan Purkait Alam", "Github_id": "https://github.com/Muskaanpurkait"},
-    7:{"Name": "Priya Singh", "Github_id": "https://github.com/Priyasinghjis"},
-    8:{"Name": "Roshimkana Pal", "Github_id": "https://github.com/Abbhiishek"},
-    9:{"Name": "Koushik Das", "Github_id": "https://github.com/koushik-das123"},
-    }
+
 
 # This path operation is to send a custom messgae to the api and retrieve it (just for learning purpose !)
 @app.get("/CustomeMsg/{author_id}/{msg}/{Author_Name}")
@@ -77,17 +67,18 @@ def read_item():
 # This path OPERATION is to retrieve all the post from the data base @
 @app.get("/posts") #it get all the posts
 def get_posts():
-
-    return{"Posts":post}
+    cur.execute("""SELECT * FROM posts """)
+    posts=cur.fetchall()
+    print(posts)
+    return{"Posts":posts}
 
 
 #This path operation create a single post 
-@app.post("/create_posts") 
-def create_posts(content:Post): # we are passing the information that we need to pass from body as dictionary and store it in content 
-    post_dict=content.dict()
-    post_dict['post_id']=randrange(0,10000000)
-    post.append(post_dict)
-    return{"Status":"Posts Created !" , "Posts":post} # reteriving the body content , but its not being stored now !!!
-    
-
-    # we want user to send content , published only other data would be default :
+@app.post("/create_posts", status_code=status.HTTP_201_CREATED) 
+def create_posts(content:Post):
+    # we are passing the information that we need to pass from body as dictionary and store it in content 
+    # cur.exectue(f"INSERT INTO posts (title, content, published) VALUES({post.title}, {post.content})")
+    cur.execute("""INSERT INTO posts (content, published) VALUES (%s, %s) RETURNING * """,(content.content, content.published))
+    created_post = cur.fetchone()
+    conn.commit()
+    return {"Created post ": created_post}
