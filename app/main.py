@@ -1,13 +1,30 @@
 import datetime
+from distutils.log import error
 from random import randrange
+from sqlite3 import DatabaseError
 from fastapi.params import Body
 from typing import Optional
 import time
 from datetime import date, time,datetime
 from fastapi import FastAPI
 from pydantic import BaseModel
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = FastAPI()
+while True:
+    try:
+        # Connect to an existing database
+        conn =psycopg2.connect(host='localhost', database='Sociome', user='postgres',password='abhishek1234',cursor_factory=RealDictCursor)
+
+        # Open a cursor to perform database operations
+        cur = conn.cursor()
+        print("Connection With Database is established !")
+        break
+    except Exception as error:
+        print ("Connecting to database failed")
+        print("Error: ", error)
+
 
 #Schema 
 class Post(BaseModel):
