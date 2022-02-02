@@ -1,6 +1,5 @@
 import datetime
-from random import random, randrange
-from turtle import title
+from random import randrange
 from fastapi.params import Body
 from typing import Optional
 import time
