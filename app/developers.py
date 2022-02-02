@@ -1,12 +1,13 @@
 from fastapi.params import Body
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
 
-router= RouterAPI()
+router= APIRouter(prefix="/developer",
+    tags=['Developers Details'])
 
 # This path shows all the developers of the *Sociome* with their github accounts 
-@router.get("/developers")
+@router.get("/")
 def read_item():
     return {1:{"Name": "Abhishek Kushwaha", "Github_id": "https://github.com/Abbhiishek"},
     2:{"Name": "Amandeep Singh", "Github_id": "https://github.com/Aman8017k"},

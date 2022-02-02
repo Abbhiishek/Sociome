@@ -11,7 +11,8 @@ from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
-
+from . import developers
+ 
 app = FastAPI()
 while True:
     try:
@@ -82,3 +83,21 @@ def create_posts(content:Post):
     created_post = cur.fetchone()
     conn.commit()
     return {"Created post ": created_post}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.include_router(developers.router)
