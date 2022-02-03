@@ -36,6 +36,7 @@ class Post(BaseModel):
     published: bool =True #the post will be published or not default is set to true 
     reacts: int = 0 # its the likes that the post have 
     created_at: str = datetime.now() # its the time at which the post was created 
+    image: Optional[str]
 #fake post dictionary
 
 post=[{}]
