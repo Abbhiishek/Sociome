@@ -3,7 +3,7 @@ from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
 
-router= APIRouter(prefix="/developer",
+router= APIRouter(prefix="/developers",
     tags=['Developers Details'])
 
 # This path shows all the developers of the *Sociome* with their github accounts 

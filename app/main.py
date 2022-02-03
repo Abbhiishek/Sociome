@@ -11,7 +11,7 @@ from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
-from . import developers
+from . import developers , CustomMsg
  
 app = FastAPI()
 while True:
@@ -45,19 +45,6 @@ post=[{}]
 @app.get("/")
 def read_root():
     return {"Title":"SOCIOME- Social Media Api","Creator":"Code For Community", "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
-
-
-
-# This path operation is to send a custom messgae to the api and retrieve it (just for learning purpose !)
-@app.get("/CustomeMsg/{author_id}/{msg}/{Author_Name}")
-def read_item(author_id: int, msg: Optional[str] = None, Author_Name:Optional[str]= None):
-    return {"Author_Id": author_id,"Author_Name": Author_Name, "Message": msg }
-
-    '''    {
-    "Author_Id": 1,
-    "Author_Name": "abhishek kushwaha",
-    "Message": "hello i am testing the api"
-    }'''
 
 # This operation delivers the current iso formatted time of the post requests !
 @app.get("/time")
@@ -102,3 +89,4 @@ def create_posts(content:Post):
 
 #including the routers from app pacakage !!!
 app.include_router(developers.router)
+app.include_router(CustomMsg.router)
