@@ -64,9 +64,7 @@ def create_posts(content:Schemas.PostBase):
 #This path operation is to find a single post already in the database by the post id :
 @app.get("/posts/{id}", status_code=status.HTTP_302_FOUND)
 def get_post(id : int):
-    print(id)
-    id=str(id)
-    cur.execute("""SELECT * FROM posts WHERE post_id =(%s)""",(id))
+    cur.execute(""" SELECT * FROM posts WHERE post_id =(%s) """,(str(id)), )
     post=cur.fetchone()
     if not post:
         response.status_code = status.HTTP_404_NOT_FOUND
@@ -77,9 +75,7 @@ def get_post(id : int):
 
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id : int):
-    print(id)
-    id=str(id)
-    cur.execute("""SELECT * FROM posts WHERE post_id =(%s)""",(id))
+    cur.execute("""SELECT * FROM posts WHERE post_id = (%s)""",(str(id)),)
     post=cur.fetchone()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
