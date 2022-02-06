@@ -29,12 +29,6 @@ def read_item():
     isoTime= time.isoformat()
     return {"Today Date": isoTime}
 
-
-
-
-
-
-
 #including the routers from app pacakage !!!
 app.include_router(developers.router)
 app.include_router(CustomMsg.router)
