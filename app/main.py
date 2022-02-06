@@ -55,7 +55,7 @@ def get_posts():
 def create_posts(content:Schemas.PostBase):
     # we are passing the information that we need to pass from body as dictionary and store it in content 
     # cur.exectue(f"INSERT INTO posts (title, content, published) VALUES({post.title}, {post.content})")
-    cur.execute("""INSERT INTO posts (content, published) VALUES (%s, %s) RETURNING * """,(content.content, content.published))
+    cur.execute("""INSERT INTO posts (content, published ,image) VALUES (%s, %s , %s) RETURNING * """,(content.content, content.published,content.image))
     created_post = cur.fetchone()
     conn.commit()
     return {"Created post ": created_post}
@@ -87,6 +87,8 @@ def delete_post(id : int):
     cur.execute("""DELETE FROM posts WHERE post_id = (%s) """,(id))
     conn.commit()
     return {"Status": "The post Id that you have choosen to delete is "+id,"Deleted Post":post}
+
+
 
 
 
