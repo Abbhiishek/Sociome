@@ -10,7 +10,6 @@ import time
 from datetime import date, time,datetime
 from fastapi import FastAPI,status
 from pydantic import BaseModel
-import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
 from . import developers , CustomMsg , Schemas
