@@ -64,25 +64,25 @@ def create_posts(content:Schemas.PostBase):
 #This path operation is to find a single post already in the database by the post id :
 @app.get("/posts/{id}", status_code=status.HTTP_302_FOUND)
 def get_post(id : int):
-    cur.execute(""" SELECT * FROM posts WHERE post_id =(%s) """,(str(id)), )
+    cur.execute(""" SELECT * FROM posts WHERE post_id = %s """, (str(id),))
     post=cur.fetchone()
     if not post:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"Status": "Post with an id of "+ id +" is not Found ."}
-    return {"Status": "The post Id that you have choosen to retrieve is "+id,"ASKED Post":post}
+    return {"Status": "The post Id that you have choosen to retrieve is "+str(id),"ASKED Post":post}
 
 # This path operation is to delete a single post by its id 
 
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id : int):
-    cur.execute("""SELECT * FROM posts WHERE post_id = (%s)""",(str(id)),)
+    cur.execute("""SELECT * FROM posts WHERE post_id = %s RETURNING * """, (str(id),))
     post=cur.fetchone()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                        details=f"post with id: {id} was not found")
     cur.execute("""DELETE FROM posts WHERE post_id = (%s) """,(id))
     conn.commit()
-    return {"Status": "The post Id that you have choosen to delete is "+id,"Deleted Post":post}
+    return {"Status": "The post Id that you have choosen to delete is "+str(id),"Deleted Post":post}
 
 
 
