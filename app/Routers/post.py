@@ -18,6 +18,7 @@ from .. import  Schemas
 router= APIRouter(prefix="/posts",
     tags=['Posts'])
 
+
 while True:
     try:
         # Connect to an existing database
@@ -35,7 +36,7 @@ while True:
 # This path OPERATION is to retrieve all the post from the data base @
 @router.get("/") #it get all the posts
 def get_posts():
-    cur.execute("""SELECT * FROM posts """)
+    cur.execute("""SELECT * FROM posts  ORDER BY created_at DESC""")
     posts=cur.fetchall()
     return{"Posts":posts}
 
