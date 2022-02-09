@@ -15,7 +15,10 @@ from psycopg2.extras import RealDictCursor
 import time
 from . import developers , CustomMsg , Schemas
  
-app = FastAPI()
+app = FastAPI(
+    title="Sociome",
+    description= "Social Media Api"
+)
 while True:
     try:
         # Connect to an existing database
