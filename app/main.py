@@ -19,7 +19,7 @@ app = FastAPI()
 # root operation 
 @app.get("/")
 def read_root():
-    return {"Title":"SOCIOME- Social Media Api","Creator":"Code For Community", "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
+    return {"Title":"SOCIOME" , "Description": "Social Media Api","Creator":"Code For Community", "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
 
 # This operation delivers the current iso formatted time of the post requests !
 @app.get("/time")
