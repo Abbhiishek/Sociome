@@ -5,7 +5,7 @@ from random import randrange
 from sqlite3 import DatabaseError
 from urllib import response
 from fastapi.params import Body
-from typing import Optional
+from typing import Dict, Optional
 import time
 from datetime import date, time,datetime
 from fastapi import FastAPI,status
@@ -27,6 +27,14 @@ def read_item():
     time = datetime.today()
     isoTime= time.isoformat()
     return {"Today Date": isoTime}
+
+
+@app.post("/trial")
+def create(payload : Dict =Body(...)):
+    print(payload)
+    return{"Messgae": f"title : {payload['title']}  , content :{payload['message']}"}
+
+
 
 #including the routers from app pacakage !!!
 app.include_router(developers.router)

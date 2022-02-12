@@ -42,7 +42,7 @@ def get_posts():
 
 
 #This path operation create a single post 
-@router.post("/posts", status_code=status.HTTP_201_CREATED) 
+@router.post("/create", status_code=status.HTTP_201_CREATED) 
 def create_posts(content:Schemas.PostBase):
     # we are passing the information that we need to pass from body as dictionary and store it in content 
     # cur.exectue(f"INSERT INTO posts (title, content, published) VALUES({post.title}, {post.content})")
