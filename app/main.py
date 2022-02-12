@@ -14,7 +14,10 @@ from psycopg2.extras import RealDictCursor
 import time
 from . import developers , CustomMsg , Schemas
 from .Routers import post
-app = FastAPI()
+app = FastAPI(
+    title="Sociome",
+    description="Social Media Api"
+)
 
 # root operation 
 @app.get("/")
