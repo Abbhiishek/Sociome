@@ -9,14 +9,21 @@ from typing import Dict, Optional
 import time
 from datetime import date, time,datetime
 from fastapi import FastAPI,status
-from pydantic import BaseModel
+from pydantic import BaseModel 
 from psycopg2.extras import RealDictCursor
 import time
-from . import developers , CustomMsg , Schemas
+from . import developers , CustomMsg , Schemas ,models
 from .Routers import post
+from .database import engine
+
+
+models.Base.metadata.create_all(bind=engine)
+
+
 app = FastAPI(
     title="Sociome",
-    description="Social Media Api"
+    description="Social Media Api",
+    tags=['General']
 )
 
 # root operation 
