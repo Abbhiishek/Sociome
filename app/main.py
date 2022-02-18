@@ -2,19 +2,16 @@ import datetime
 from distutils.log import error
 from http.client import HTTPException
 from random import randrange
-from sqlite3 import DatabaseError
-from urllib import response
 from fastapi.params import Body
 from typing import Dict, Optional
 import time
 from datetime import date, time,datetime
 from fastapi import FastAPI,status
-from pydantic import BaseModel 
-from psycopg2.extras import RealDictCursor
 import time
+
 from . import developers , CustomMsg , Schemas ,models
 from .Routers import post
-from .database import engine
+from .database import engine 
 
 
 models.Base.metadata.create_all(bind=engine)
