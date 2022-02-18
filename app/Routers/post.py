@@ -2,15 +2,11 @@ from distutils.log import error
 from http.client import HTTPException
 from random import randrange
 from urllib import response
-from fastapi.params import Body
-from typing import Optional
 import psycopg2
 import time
 from psycopg2.extras import RealDictCursor
-from fastapi.params import Body
-from pydantic import BaseModel
-from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
-from typing import List, Optional
+from fastapi import  status, HTTPException, Depends, APIRouter
+
 # from sqlalchemy.sql.functions import func
 from .. import  Schemas
 
