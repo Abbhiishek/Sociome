@@ -6,7 +6,7 @@ from psycopg2.extras import RealDictCursor
 from fastapi import  Response, status, HTTPException, Depends, APIRouter
 
 # from sqlalchemy.sql.functions import func
-from .. import  Schemas , models
+from .. import  Schemas , models ,oauth2
 from .. database import get_db , Base
 from .. models import Post
 
@@ -31,8 +31,8 @@ router= APIRouter(prefix="/posts",
 #         time.sleep(2)
 
 # This path OPERATION is to retrieve all the post from the data base @
-@router.get("/",status_code=status.HTTP_200_OK) #it get all the posts
-def get_posts(db: Session = Depends(get_db)):
+@router.get("/",status_code=status.HTTP_200_OK ) #it get all the posts
+def get_posts(db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute("""SELECT * FROM posts  ORDER BY created_at DESC""")
     # posts=cur.fetchall()
     posts=db.query(models.Post).all()
@@ -41,7 +41,7 @@ def get_posts(db: Session = Depends(get_db)):
 
 #This path operation create a single post 
 @router.post("/", status_code=status.HTTP_201_CREATED) 
-def create_posts(content:Schemas.PostBase,db: Session = Depends(get_db)):
+def create_posts(content:Schemas.PostCreate,db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # we are passing the information that we need to pass from body as dictionary and store it in content 
     # cur.exectue(f"INSERT INTO posts (title, content, published) VALUES({post.title}, {post.content})")
     # cur.execute("""INSERT INTO posts (content, published ,image) VALUES (%s, %s , %s) RETURNING * """,(content.content, content.published,content.image))
@@ -56,7 +56,7 @@ def create_posts(content:Schemas.PostBase,db: Session = Depends(get_db)):
 
 #This path operation is to find a single post already in the database by the post id :
 @router.get("/{id}", status_code=status.HTTP_302_FOUND)
-def get_post(id : int, db: Session = Depends(get_db)):
+def get_post(id : int, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute(""" SELECT * FROM posts WHERE post_id = %s """, (str(id),))
     # post=cur.fetchone()
     post=db.query(models.Post).filter(models.Post.post_id==id).first()
@@ -70,41 +70,44 @@ def get_post(id : int, db: Session = Depends(get_db)):
 # This path operation is to delete a single post by its id 
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_post(id : int,db: Session = Depends(get_db)):
+def delete_post(id : int,db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute("""SELECT * FROM posts WHERE post_id = %s RETURNING * """, (str(id),))
     # post=cur.fetchone()
-    post=db.query(models.Post).filter(models.Post.post_id==id).first()
+    post_query = db.query(models.Post).filter(models.Post.id == id)
+    post = post_query.first()
 
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Not authorized to perform requested action")
 
-    
-    if  post == None:
+                            
+    if  post.first() == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                       details=f"post with id: {id} was not found")
+                       detail=f"post with id: {id} was not found")
     # cur.execute("""DELETE FROM posts WHERE post_id = (%s) """,(id))
     # conn.commit()
-    post.delete(synchronize_session = False)
+    post_query.delete(synchronize_session=False)
     db.commit()
-
-
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 
 @router.put("/{id}" , status_code=status.HTTP_201_CREATED)
-def update_post(id : int, content:Schemas.PostBase,db: Session = Depends(get_db)):
+def update_post(id : int, content:Schemas.PostCreate,db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute(""" UPDATE posts SET  content = %s , published = %s ,image =%s WHERE post_id = %s RETURNING * """,(content.content, content.published,content.image,str(id),))
     # post=cur.fetchone()
+    post_query = db.query(models.Post).filter(models.Post.post_id == id)
+    post = post_query.first()
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Not authorized to perform requested action")
 
-    post = db.query(models.Post).filter(models.Post.post_id==id).first()
-
-    if not post:
+    if post == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                       details=f"post with id: {id} was not found")
+                       detail=f"post with id: {id} was not found")
+    
 
-    post.update(content.dict(),synchronize_session = False)
+    post_query.update(content.dict(),synchronize_session=False)
     db.commit()
     # conn.commit()
-
-
-
-    return post
+    return post_query.first()
