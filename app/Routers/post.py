@@ -14,22 +14,6 @@ router= APIRouter(prefix="/posts",
     tags=['Posts'])
 
 
-#commented out  as we are going to use the sqlalchemy instance to perform database operation
-
-# while True:
-#     try:
-#         # Connect to an existing database
-#         conn =psycopg2.connect(host='localhost', database='Sociome', user='postgres',password='abhishek1234',cursor_factory=RealDictCursor)
-
-#         # Open a cursor to perform database operations
-#         cur = conn.cursor()
-#         print("Connection With Database is established !")
-#         break
-#     except Exception as error:
-#         print ("Connecting to database failed")
-#         print("Error: ", error)
-#         time.sleep(2)
-
 # This path OPERATION is to retrieve all the post from the data base @
 @router.get("/",status_code=status.HTTP_200_OK ) #it get all the posts
 def get_posts(db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
@@ -47,7 +31,11 @@ def create_posts(content:Schemas.PostCreate,db: Session = Depends(get_db),curren
     # cur.execute("""INSERT INTO posts (content, published ,image) VALUES (%s, %s , %s) RETURNING * """,(content.content, content.published,content.image))
     # created_post = cur.fetchone()
     # conn.commit()
-    new_post = models.Post(**content.dict())
+
+
+
+
+    new_post = models.Post(author=current_user.user_id,**content.dict())
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
@@ -73,15 +61,19 @@ def get_post(id : int, db: Session = Depends(get_db),current_user: int = Depends
 def delete_post(id : int,db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute("""SELECT * FROM posts WHERE post_id = %s RETURNING * """, (str(id),))
     # post=cur.fetchone()
-    post_query = db.query(models.Post).filter(models.Post.id == id)
+    post_query = db.query(models.Post).filter(models.Post.post_id == id)
     post = post_query.first()
+    if  post == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                       detail=f"post with id: {id} was not found")
+                       
 
-    if post.owner_id != current_user.id:
+    if post.author != current_user.user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="Not authorized to perform requested action")
 
                             
-    if  post.first() == None:
+    if  post == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                        detail=f"post with id: {id} was not found")
     # cur.execute("""DELETE FROM posts WHERE post_id = (%s) """,(id))
@@ -98,7 +90,7 @@ def update_post(id : int, content:Schemas.PostCreate,db: Session = Depends(get_d
     # post=cur.fetchone()
     post_query = db.query(models.Post).filter(models.Post.post_id == id)
     post = post_query.first()
-    if post.owner_id != current_user.id:
+    if post.author != current_user.user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="Not authorized to perform requested action")
 
