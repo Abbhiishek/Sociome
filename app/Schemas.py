@@ -39,6 +39,7 @@ class Post(PostBase):
     created_at: datetime
     owner_id: int
     owner: UserOut
+    # author: UserOut
 
     class Config:
         orm_mode = True
