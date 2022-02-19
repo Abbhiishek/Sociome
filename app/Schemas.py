@@ -17,7 +17,7 @@ class PostBase(BaseModel):
 class PostCreate(PostBase):
     pass
 
-
+# this is a response model for fetching user details or for creating the user
 class UserOut(BaseModel):
     user_id: int
     fullname: str
@@ -25,10 +25,13 @@ class UserOut(BaseModel):
     bio: str
     github_link: str
     email: EmailStr
-    created_at: datetime
+    joined_at: datetime
 
     class Config:
         orm_mode = True
+
+
+
 
 
 class Post(PostBase):
@@ -40,7 +43,7 @@ class Post(PostBase):
     class Config:
         orm_mode = True
 
-
+# this is a response model 
 class PostOut(BaseModel):
     Post: Post
     votes: int
@@ -52,24 +55,26 @@ class PostOut(BaseModel):
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
-    fullname: str
+    fullname: Optional[str]
     username: str
-    bio: str
-    github_link: str
+    bio:Optional[str]
+    profile_pic: Optional[str]
+    github_link: Optional[str]
+
 
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
-
+# the is the response schemas for token 
 class Token(BaseModel):
     access_token: str
     token_type: str
 
 
 class TokenData(BaseModel):
-    id: Optional[str] = None
+    username: Optional[str] = None
 
 
 class Vote(BaseModel):
