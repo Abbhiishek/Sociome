@@ -23,6 +23,7 @@ class UserOut(BaseModel):
     fullname: str
     username: str
     bio: str
+    profile_pic: str
     github_link: str
     email: EmailStr
     joined_at: datetime
@@ -37,9 +38,9 @@ class UserOut(BaseModel):
 class Post(PostBase):
     post_id: int
     created_at: datetime
-    owner_id: int
-    owner: UserOut
-    # author: UserOut
+    author: int
+    # owner: UserOut
+    author_details: UserOut
 
     class Config:
         orm_mode = True
