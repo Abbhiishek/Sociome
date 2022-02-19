@@ -1,5 +1,6 @@
 from sqlalchemy import Column,Integer, String, Boolean,ForeignKey
 from sqlalchemy.sql.expression import text
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import TIMESTAMP 
 from .database import Base
 
@@ -15,6 +16,8 @@ class Post(Base):
     published = Column (Boolean, server_default='TRUE', nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     author = Column(Integer , ForeignKey("users.user_id",ondelete="CASCADE"), nullable=False)
+    author_details = relationship("User")
+    
 
 # This is the structure of user table in the database 
 class User(Base):
