@@ -10,7 +10,7 @@ from fastapi import FastAPI,status
 import time
 
 from . import developers , CustomMsg , Schemas ,models
-from .Routers import post
+from .Routers import post , user ,auth
 from .database import engine 
 
 
@@ -47,3 +47,5 @@ def create(payload : Dict =Body(...)):
 app.include_router(developers.router)
 app.include_router(CustomMsg.router)
 app.include_router(post.router)
+app.include_router(user.router)
+app.include_router(auth.router)
