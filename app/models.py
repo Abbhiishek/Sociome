@@ -20,7 +20,7 @@ class Post(Base):
 # This is the structure of user table in the database 
 class User(Base):
 
-    __tablename__= "user"
+    __tablename__= "users"
     user_id = Column (Integer, primary_key=True, nullable=False)
     email = Column (String , nullable=False, unique=True)
     password = Column(String, nullable=False)
