@@ -63,7 +63,13 @@ class UserCreate(BaseModel):
     profile_pic: Optional[str]
     github_link: Optional[str]
 
-
+# this is a schemas model for updating user details
+class UserUpdate(BaseModel):
+    email: EmailStr
+    password: str
+    username : str
+    bio:Optional[str]
+    profile_pic: Optional[str]
 
 class UserLogin(BaseModel):
     email: EmailStr

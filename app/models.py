@@ -11,7 +11,6 @@ class Post(Base):
 
     post_id = Column (Integer, primary_key=True, nullable=False)
     content = Column(String, nullable=False)
-    reacts = Column(Integer, nullable=False, server_default='0')
     image = Column(String)
     published = Column (Boolean, server_default='TRUE', nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
@@ -33,3 +32,10 @@ class User(Base):
     github_link = Column(String)
     joined_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
+
+
+class Vote(Base):
+
+    __tablename__ = "votes"
+    user_id = Column (Integer, ForeignKey("users.user_id", ondelete="CASCADE") , primary_key=True, nullable=False )
+    post_id = Column (Integer, ForeignKey("posts.post_id", ondelete="CASCADE"), primary_key=True, nullable=False)
