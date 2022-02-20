@@ -14,7 +14,7 @@ class Post(Base):
     image = Column(String)
     published = Column (Boolean, server_default='TRUE', nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    author = Column(Integer , ForeignKey("users.user_id",ondelete="CASCADE"), nullable=False)
+    author = Column(String , ForeignKey("users.username",ondelete="CASCADE"), nullable=False)
     author_details = relationship("User")
     
 
