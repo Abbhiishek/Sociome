@@ -40,8 +40,8 @@ def create(payload : Dict =Body(...)):
 
 
 #including the routers from app pacakage !!!
+app.include_router(user.router)
+app.include_router(auth.router)
 app.include_router(developers.router)
 app.include_router(CustomMsg.router)
 app.include_router(post.router)
-app.include_router(user.router)
-app.include_router(auth.router)

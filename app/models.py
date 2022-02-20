@@ -32,4 +32,3 @@ class User(Base):
     bio = Column(String)
     github_link = Column(String)
     joined_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-
