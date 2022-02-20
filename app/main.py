@@ -4,14 +4,11 @@ from random import randrange
 from fastapi.params import Body
 from typing import Dict
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from . import developers , CustomMsg ,models
 from .Routers import post , user ,auth , vote
 from .database import engine 
-
-
-models.Base.metadata.create_all(bind=engine)
-
 
 app = FastAPI(
     title="Sociome",
@@ -19,10 +16,31 @@ app = FastAPI(
     tags=['General']
 )
 
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "https://abbhishek.me"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+models.Base.metadata.create_all(bind=engine)
+
+
+
 # root operation 
 @app.get("/")
 def read_root():
-    return {"Title":"SOCIOME- Social Media Api","Creator":"Code For Community", "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
+    return {"Title":"SOCIOME- Social Media Api","Creator":"Code For Community", 
+    "Founded_By":"Abhishek Kushwaha" ,"Version":"1.0.0","Started_AT":"Janurary 2022"}
 
 # This operation delivers the current iso formatted time of the post requests !
 @app.get("/time")
