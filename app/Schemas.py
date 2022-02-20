@@ -38,7 +38,7 @@ class UserOut(BaseModel):
 class Post(PostBase):
     post_id: int
     created_at: datetime
-    author: int
+    author: str
     # owner: UserOut
     author_details: UserOut
 
