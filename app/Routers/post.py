@@ -23,6 +23,9 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
     # cur.execute("""SELECT * FROM posts  ORDER BY created_at DESC""")
     # posts=cur.fetchall()
 
+    if not current_user:
+         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
+        detail= f"You are not Logged in !, Try to Login with username & Password !")
 
 
     posts = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
@@ -34,8 +37,13 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
 def get_yours_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # cur.execute("""SELECT * FROM posts  ORDER BY created_at DESC""")
     # posts=cur.fetchall()
+
+    if not current_user:
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
+        detail= f"You are not Logged in !, Try to Login with username & Password !")
+
     posts=db.query(models.Post , func.count(models.Vote.post_id).label("votes")).join(
-        models.Vote, models.Vote.post_id == models.Post.post_id, isouter=True).group_by(models.Post.post_id).filter(models.Post.author == current_user.user_id).order_by(Post.created_at.desc()).all()
+        models.Vote, models.Vote.post_id == models.Post.post_id, isouter=True).group_by(models.Post.post_id).filter(models.Post.author == current_user.username).order_by(Post.created_at.desc()).all()
 
 
     # posts = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
@@ -57,7 +65,7 @@ def create_posts(content:Schemas.PostCreate, db: Session = Depends(get_db), curr
     # cur.execute("""INSERT INTO posts (content, published ,image) VALUES (%s, %s , %s) RETURNING * """,(content.content, content.published,content.image))
     # created_post = cur.fetchone()
     # conn.commit()
-    new_post = models.Post(author=current_user.user_id,**content.dict())
+    new_post = models.Post(author=current_user.username,**content.dict())
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
@@ -110,7 +118,7 @@ def update_post(id : int, content:Schemas.PostCreate,db: Session = Depends(get_d
     # post=cur.fetchone()
     post_query = db.query(models.Post).filter(models.Post.post_id == id)
     post = post_query.first()
-    if post.author != current_user.user_id:
+    if post.author != current_user.username:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="Not authorized to perform requested action")
 

@@ -10,6 +10,11 @@ from . import developers , CustomMsg ,models
 from .Routers import post , user ,auth , vote
 from .database import engine 
 
+# Alembic is gonna  make all the changes for the database  
+# with --autogenerte tag of alembic 
+# models.Base.metadata.create_all(bind=engine)
+
+
 app = FastAPI(
     title="Sociome",
     description="Social Media Api",
@@ -31,9 +36,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-models.Base.metadata.create_all(bind=engine)
-
 
 
 # root operation 
