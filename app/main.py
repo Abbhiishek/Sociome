@@ -18,7 +18,7 @@ from .database import engine
 app = FastAPI(
     title="Sociome",
     description="Social Media Api",
-    tags=['General']
+    version= "V.1.00.02"
 )
 
 origins = [
