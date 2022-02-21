@@ -2,6 +2,8 @@
 
 Sociome is a API DEVELOPMENT PROJECT UNDER [CODE FOR COMMUNITY !](https://github.com/Abbhiishek/Code-For-Community) capable of CRUD operation and this api is specific with Social Media Application Functionalities.
 
+[![Python application](https://github.com/Abbhiishek/Sociome/actions/workflows/python-app.yml/badge.svg?branch=main)](https://github.com/Abbhiishek/Sociome/actions/workflows/python-app.yml)
+
 # Tech-Stacks Used 🔮
   <p align="left"> 
    <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a>
